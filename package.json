@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "csv": "^5.3.2",
+    "csv-parse": "^4.8.8",
+    "dotenv": "^8.2.0",
+    "entities": "^2.0.0",
+    "express": "^4.17.1",
+    "node-fetch": "^2.6.0"
+  }
+}
