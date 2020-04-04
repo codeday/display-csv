@@ -1,25 +1,21 @@
 require('dotenv').config();
+const nunjucks = require("nunjucks");
+var path = require('path');
 const app = require('express')();
 const getCsv = require('./get-csv');
-const render = require('./render');
 const config = require('./config');
 
+// Template engine configuration. The path dir is pretty much the only thing that may change.
+nunjucks.configure(path.join(__dirname, 'Templates'), {
+  autoescape: true,
+  express: app
+})
+
+// Primary (and only...) path
 app.get('/', async (req, res) => {
   const csv = await getCsv(config.csvUrl);
-  res.send(`
-    <html>
-    <head>
-      <title>${config.title}</title>
-      <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/pure-min.css" integrity="sha384-oAOxQR6DkCoMliIh8yFnu25d7Eq/PHS21PClpwjOTeU2jRSq11vu66rf90/cZr47" crossorigin="anonymous">
-    </head>
-    <body>
-      <div style="max-width: 980px; margin: 0 auto;">
-        <h1>${config.title}</h1>
-        ${render(csv, config.titleColumn)}
-      </div>
-    </body>
-    </html>
-  `);
+  // Include variables used in template in the array here
+  res.render('index.html', { csv: csv, config: config })
 });
 
 app.listen(config.port, () => {

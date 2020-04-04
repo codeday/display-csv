@@ -1,0 +1,42 @@
+<html>
+
+<head>
+    <title>{{config.title}}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
+</head>
+
+<body>
+    <section class="hero is-primary" style="background-color: #ff686b;">
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title">
+                    {{config.title}}
+                </h1>
+            </div>
+        </div>
+    </section>
+    <div class="container section" style="max-width: 980px; margin: 0 auto;">
+        {% for object in csv %}
+        <div class="card section content">
+            <div class="card-content">
+                <p class="title">
+                    {{ object[config.titleColumn] }}
+                  </p>
+                <div class="content">
+                    <table class="table tbody">
+                        {% for field in config.fields %}
+                        <tr>
+                            <th>{{ field }}</th>
+                            <td>{{ object[field] }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+
+</html>
