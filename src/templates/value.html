@@ -1,0 +1,24 @@
+{% macro render(val) %}
+  {% if val.indexOf('http://') === 0 or val.indexOf('https://') === 0 %}
+    {% if is_youtube(val) and get_youtube_id(val) %}
+      <iframe
+        width="560"
+        height="315"
+        src="https://www.youtube-nocookie.com/embed/{{ get_youtube_id(val) }}"
+        frameborder="0" allow="encrypted-media"
+        allowfullscreen></iframe><br />
+    {% elseif is_hls(val) %}
+      <script type="text/javascript">
+        var video = document.createElement('video');
+        video.controls = true;
+        addHls(video, "{{ val }}");
+        document.scripts[document.scripts.length - 1].parentNode.appendChild(video);
+      </script><br />
+    {% elseif is_video(val) %}
+      <video controls src="{{ val }}" /><br />
+    {% endif %}
+    <a href="{{ val }}" target="_blank">{{ val }}</a>
+  {% else %}
+    {{ val | striptags(true) | escape | nl2br }}
+  {% endif %}
+{% endmacro %}

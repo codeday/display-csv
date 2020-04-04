@@ -1,3 +1,4 @@
+{% import "value.html" as value %}
 <html>
 
 <head>
@@ -7,6 +8,25 @@
 </head>
 
 <body>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@0.8.2"></script>
+    <script type="text/javascript">
+      function addHls(video, url) {
+        if (Hls.isSupported()) {
+          var hls = new Hls();
+          hls.loadSource(url);
+          hls.attachMedia(video);
+          hls.on(Hls.Events.MANIFEST_PARSED, function() {
+            video.play();
+          });
+        }
+        else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+          video.src = url;
+          video.addEventListener('loadedmetadata', function() {
+            video.play();
+          });
+        }
+      }
+    </script>
     <section class="hero is-primary" style="background-color: #ff686b;">
         <div class="hero-body">
             <div class="container">
@@ -25,10 +45,10 @@
                   </p>
                 <div class="content">
                     <table class="table tbody">
-                        {% for field in config.fields %}
+                        {% for field, val in object %}
                         <tr>
                             <th>{{ field }}</th>
-                            <td>{{ object[field] }}</td>
+                            <td>{{ value.render(val) }}</td>
                         </tr>
                         {% endfor %}
                     </table>

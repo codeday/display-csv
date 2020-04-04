@@ -4,12 +4,14 @@ var path = require('path');
 const app = require('express')();
 const getCsv = require('./get-csv');
 const config = require('./config');
+const viewFunctions = require('./view-functions');
 
 // Template engine configuration. The path dir is pretty much the only thing that may change.
-nunjucks.configure(path.join(__dirname, 'Templates'), {
+const env = nunjucks.configure(path.join(__dirname, 'templates'), {
   autoescape: true,
   express: app
-})
+});
+viewFunctions(env);
 
 // Primary (and only...) path
 app.get('/', async (req, res) => {
