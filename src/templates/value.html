@@ -17,7 +17,6 @@
       </script><br />
     {% elseif is_video(val) %}
       <video controls src="{{ val }}" preload="none" /><br />
-    {% endif %}
     {% elseif is_image(val) %}
       <img src="{{ val }}" preload="none" /><br />
     {% endif %}
