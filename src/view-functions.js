@@ -25,4 +25,10 @@ module.exports = (env) => {
     const ext = path.extname(urlPath) || '';
     return ['.mp4', '.mov'].indexOf(ext) >= 0;
   });
+
+  env.addGlobal('is_image', (str) => {
+    const urlPath = url.parse(str).pathname || '';
+    const ext = path.extname(urlPath) || '';
+    return ['.png', '.jpg'].indexOf(ext) >= 0;
+  });
 }
