@@ -17,7 +17,7 @@ viewFunctions(env);
 app.get('/', async (req, res) => {
   const csv = await getCsv(config.csvUrl);
   // Include variables used in template in the array here
-  res.render('slideshow.html', { csv: csv, config: config })
+  res.render(config.template, { csv: csv, config: config })
 });
 
 app.listen(config.port, () => {
