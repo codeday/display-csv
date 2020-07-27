@@ -27,7 +27,7 @@
             to {opacity: 1}
         }
 
-        body{
+        html{
             overflow:hidden;
             overflow-x: hidden;
             overflow-y: hidden;
@@ -58,7 +58,7 @@
         }
       }
         var slideIndex = 0;
-    showSlides(slideIndex);
+    //showSlides(slideIndex);
 
     // Next/previous controls
     function plusSlides(n) {
@@ -85,6 +85,9 @@
         slides[slideIndex - 1].style.display = "block";
     }
     </script>
+        <div class="slide fade">
+            <img src="https://f1.srnd.org/labs/splash.svg" alt="CodeLabs Logo">
+        </div>
         {% for object in csv %}
         <div class="slide fade">
                         {% for field, val in object %}
