@@ -1,0 +1,25 @@
+{% macro render(val) %}
+  {% if val.indexOf('http://') === 0 or val.indexOf('https://') === 0 %}
+    {% if is_youtube(val) and get_youtube_id(val) %}
+      <iframe
+        src="https://www.youtube-nocookie.com/embed/{{ get_youtube_id(val) }}"
+        frameborder="0" allow="encrypted-media"
+        allowfullscreen></iframe>
+    {% elseif is_hls(val) %}
+      <script type="text/javascript">
+        var video = document.createElement('video');
+        video.controls = true;
+        video.preload = "none";
+        video.autoplay = false;
+        video.onended = plusSlides(1);
+        addHls(video, "{{ val }}");
+        document.scripts[document.scripts.length - 1].parentNode.appendChild(video).addEventListener('ended', endHandler, false);
+        function endHandler(e) {
+        plusSlides(1)
+    }
+      </script>
+    {% elseif is_video(val) %}
+      <video controls src="{{ val }}" preload="none" onended=plusSlides(1) />
+    {% endif %}
+  {% endif %}
+{% endmacro %}
